@@ -1,0 +1,41 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>jQuery三级联动树状菜单选择</title>
+    <link type="text/css" rel="stylesheet" href="treeBox.css">
+    <script src="http://www.jq22.com/jquery/jquery-1.10.2.js"></script>
+    <script src="treeBox.js"></script>
+</head>
+<body>
+<div id="treeBox" style="text-align:center;">
+    <input class="focusEl" type="text" placeholder="请选择">
+    <input class="jobType" type="hidden" name="jobType[]" value="">
+    <input class="jobType" type="hidden" name="jobType[]" value="">
+    <input class="jobType" type="hidden" name="jobType[]" value="">
+</div>
+<script src="data.js"></script>
+<script>
+    treeBox({
+        el:'$(".focusEl")', //焦点或者点击事件DOM 必传可以是非input元素
+        // width:{ // 各级列表宽度 可选 不传默认值就为 160，160，160，200
+        //     lv1:160,
+        //     lv2:160,
+        //     lv3:160,
+        //     selected:200
+        // },
+        selectedNum:10,// 设置可以选择多少个复选框 可选 不传默认3
+        // height:280, //高度 不传默认值 280
+        data:jobs.info, //数据 必传
+        topData:hotJobs.data,// 常用数据 可选
+        confirm:function (res) { //回调函数 必传 会以json的格式返回所选中的数据
+            for(var k in res) {
+                $(".jobType").eq(k).val(res[k].value);
+                $(".jobType").eq(k).attr('name','jobType['+ res[k].uid +']');
+            }
+        }
+    });
+</script>
+</body>
+</html>
